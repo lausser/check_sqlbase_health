@@ -5,10 +5,6 @@ use Time::HiRes;
 use File::Basename;
 use File::Temp qw(tempfile);
 
-sub create_ini_file {
-  my $self = shift;
-}
-
 sub create_cmd_line {
   my $self = shift;
   my @args = ();
@@ -83,6 +79,14 @@ sub create_extcmd_files {
       DIR => $self->system_tmpdir() );
   close $self->{sql_inifile_handle};
   $Monitoring::GLPlugin::DB::sql_inifile = $self->{sql_inifile};
+}
+
+sub delete_extcmd_files {
+  my ($self) = @_;
+  $self->SUPER::delete_extcmd_files();
+  unlink $Monitoring::GLPlugin::DB::sql_inifile
+      if $Monitoring::GLPlugin::DB::sql_inifile &&
+      -f $Monitoring::GLPlugin::DB::sql_inifile;
 }
 
 sub write_extcmd_file {
