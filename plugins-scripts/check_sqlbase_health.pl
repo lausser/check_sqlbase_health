@@ -55,6 +55,7 @@ $plugin->add_arg(
     help => "--password
    the mssql user's password",
     required => 0,
+    decode => "rfc3986",
 );
 $plugin->add_arg(
     spec => 'port=i',
